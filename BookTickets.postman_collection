@@ -1,0 +1,184 @@
+{
+	"info": {
+		"_postman_id": "a9cd0122-1172-498d-93da-2474ea3d170d",
+		"name": "Book Tickets",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Tickets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"console.log(jsonData);\r",
+							"var showIDjson = jsonData[0][\"id\"];\r",
+							"pm.environment.set(\"showID\", showIDjson)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://ticketmonster.apicasystem.com/ticket-monster/rest/events?_=1678725534104",
+					"protocol": "http",
+					"host": [
+						"ticketmonster",
+						"apicasystem",
+						"com"
+					],
+					"path": [
+						"ticket-monster",
+						"rest",
+						"events"
+					],
+					"query": [
+						{
+							"key": "_",
+							"value": "1678725534104"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Show Info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"console.log(jsonData);\r",
+							"var performanceIDjson = jsonData[0][\"performances\"][0].id;\r",
+							"pm.environment.set(\"performanceID\", performanceIDjson);\r",
+							"console.log({performanceIDjson});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://ticketmonster.apicasystem.com/ticket-monster/rest/shows?event={{showID}}&_=1678725534106",
+					"protocol": "http",
+					"host": [
+						"ticketmonster",
+						"apicasystem",
+						"com"
+					],
+					"path": [
+						"ticket-monster",
+						"rest",
+						"shows"
+					],
+					"query": [
+						{
+							"key": "event",
+							"value": "{{showID}}"
+						},
+						{
+							"key": "_",
+							"value": "1678725534106"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Purchase Tickets",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"ticketRequests\":[{\"ticketPrice\":9,\"quantity\":1}],\"email\":\"test@gmail.com\",\"performance\":\"{{performanceID}}\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://ticketmonster.apicasystem.com/ticket-monster/rest/bookings",
+					"protocol": "http",
+					"host": [
+						"ticketmonster",
+						"apicasystem",
+						"com"
+					],
+					"path": [
+						"ticket-monster",
+						"rest",
+						"bookings"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "showID",
+			"value": "0"
+		},
+		{
+			"key": "performanceID",
+			"value": "0"
+		}
+	]
+}
